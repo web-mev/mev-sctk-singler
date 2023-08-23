@@ -86,7 +86,7 @@ df.final <- data.frame(
 )
 
 # Write results to file
-output_filename <- paste(opt$output_file_prefix, contrast_str, 'tsv', sep='.')
+output_filename <- paste(opt$output_file_prefix, 'cell_types', opt$level, 'tsv', sep='.')
 write.table(
     df.final,
     output_filename,
