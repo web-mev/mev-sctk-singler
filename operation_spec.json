@@ -30,7 +30,7 @@
             "converter": "api.converters.basic_attributes.StringConverter",
             "spec": {
                 "attribute_type": "OptionString", 
-                "options": ["Human Primary Cell Atlas", "Blueprint/ENCODE", "mp", "Database of Immune Cell Expression/eQTLs/Epigenomics", "Immunological Genome Project", "Mouse", "Zeisel Mouse Brain"]
+                "options": ["Human Primary Cell Atlas", "Blueprint/ENCODE", "Muraro Pancreas", "Database of Immune Cell Expression/eQTLs/Epigenomics", "Immunological Genome Project", "Mouse", "Zeisel Mouse Brain"]
             }
         },
         "SctkSingler.identifier_choice": {

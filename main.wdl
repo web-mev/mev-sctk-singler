@@ -48,7 +48,7 @@ task runSingler {
             -f ${exprs_file} \
             -o ${output_prefix} \
             --level ${annotation_level} \
-            --reference ${reference} \
+            --reference "${reference}" \
             --featureType ${identifier_choice}
     >>>
 

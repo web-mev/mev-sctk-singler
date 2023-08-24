@@ -1,0 +1,10 @@
+library(celldex)
+library(scRNAseq)
+
+celldex::HumanPrimaryCellAtlasData()
+celldex::MouseRNAseqData()
+scRNAseq::MuraroPancreasData()
+celldex::DatabaseImmuneCellExpressionData()
+celldex::BlueprintEncodeData()
+scRNAseq::ZeiselBrainData()
+celldex::ImmGenData()
