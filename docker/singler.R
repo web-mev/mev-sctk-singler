@@ -41,23 +41,24 @@ if (is.null(opt$output_file_prefix)) {
     quit(status=1)
 }
 
-# in case of other capitalization conventions, etc. submitted as ar
+# in case of other capitalization conventions, etc.
 featureType = tolower(opt$featureType)
+level = tolower(opt$level)
 
 # change the human-readable name to the 'encoded' one:
-if (opt$reference == 'Human Primary Cell Atlas'){
+if (opt$reference == 'Human_Primary_Cell_Atlas'){
   reference = 'hpca'
-} else if(opt$reference == 'Blueprint/ENCODE'){
+} else if(opt$reference == 'ENCODE_Blueprint'){
   reference = 'bpe'
-} else if(opt$reference == 'Muraro Pancreas'){
+} else if(opt$reference == 'Muraro_Pancreas'){
    reference = 'mp'
-} else if(opt$reference == 'Database of Immune Cell Expression/eQTLs/Epigenomics'){
+} else if(opt$reference == 'Database_of_Immune_Cell_Expression'){
   reference = 'dice'
-} else if(opt$reference == 'Immunological Genome Project'){
+} else if(opt$reference == 'Immunological_Genome_Project'){
   reference = 'immgen'
 } else if(opt$reference == 'Mouse'){
   reference = 'mouse'
-} else if(opt$reference == 'Zeisel Mouse Brain'){
+} else if(opt$reference == 'Zeisel_Mouse_Brain'){
   reference = 'zeisel'
 }
 
@@ -90,12 +91,12 @@ sce <- runSingleR(
     inSCE = sce,
     useAssay = "logcounts",
     useBltinRef = reference,
-    level = opt$level,
+    level = level,
     featureType = featureType
 )
 
 # Build varname which will be used to select the annotations
-varName <- sprintf('SingleR_%s_%s_labels', reference, opt$level)
+varName <- sprintf('SingleR_%s_%s_labels', reference, level)
 
 df.final <- data.frame(
     cell_barcodes = as.vector(colnames(sce)),
@@ -106,7 +107,7 @@ df.final <- data.frame(
 output_filename <- paste(opt$output_file_prefix, 
   'cell_types',
   reference,
-  opt$level, 'tsv', sep='.')
+  level, 'tsv', sep='.')
 write.table(
     df.final,
     output_filename,
