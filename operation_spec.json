@@ -25,7 +25,7 @@
         },
         "SctkSingler.reference": {
             "description":"The reference annotation to which we will compare your cells. For more information see <a href=\"https://bioconductor.org/packages/3.17/data/experiment/vignettes/celldex/inst/doc/userguide.html\">https://bioconductor.org/packages/3.17/data/experiment/vignettes/celldex/inst/doc/userguide.html</a>",
-            "name":"Annotation level:",
+            "name":"Reference database:",
             "required": true,
             "converter": "api.converters.basic_attributes.StringConverter",
             "spec": {

@@ -43,6 +43,8 @@ task runSingler {
 
     String output_prefix = "singler"
 
+    Int disk_size = 20
+
     command <<<
         Rscript /opt/software/singler.R \
             -f ${exprs_file} \
@@ -59,7 +61,7 @@ task runSingler {
     runtime {
         docker: "ghcr.io/web-mev/mev-sctk-singler"
         cpu: 4
-        memory: "30 G"
+        memory: "10 G"
         disks: "local-disk " + disk_size + " HDD"
     }
 }

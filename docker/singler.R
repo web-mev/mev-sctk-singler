@@ -1,5 +1,5 @@
-#suppressMessages(suppressWarnings(library("singleCellTK")))
-#suppressMessages(suppressWarnings(library("Matrix")))
+suppressMessages(suppressWarnings(library("singleCellTK")))
+suppressMessages(suppressWarnings(library("Matrix")))
 suppressMessages(suppressWarnings(library("optparse")))
 
 # args from command line:
@@ -41,6 +41,26 @@ if (is.null(opt$output_file_prefix)) {
     quit(status=1)
 }
 
+# in case of other capitalization conventions, etc. submitted as ar
+featureType = tolower(opt$featureType)
+
+# change the human-readable name to the 'encoded' one:
+if (opt$reference == 'Human Primary Cell Atlas'){
+  reference = 'hpca'
+} else if(opt$reference == 'Blueprint/ENCODE'){
+  reference = 'bpe'
+} else if(opt$reference == 'Muraro Pancreas'){
+   reference = 'mp'
+} else if(opt$reference == 'Database of Immune Cell Expression/eQTLs/Epigenomics'){
+  reference = 'dice'
+} else if(opt$reference == 'Immunological Genome Project'){
+  reference = 'immgen'
+} else if(opt$reference == 'Mouse'){
+  reference = 'mouse'
+} else if(opt$reference == 'Zeisel Mouse Brain'){
+  reference = 'zeisel'
+}
+
 # Import counts as a data.frame
 cnts <- read.table(
     file = opt$input_file,
@@ -50,7 +70,7 @@ cnts <- read.table(
 )
 
 # change to a sparse matrix representation, necessary for SCE
-cnts <- as(as.matrix(cnts), "sparseMatrix")
+cnts <- Matrix(as.matrix(cnts), sparse=T)
 
 # Create an SCE object from the counts
 sce <- SingleCellExperiment(
@@ -69,16 +89,13 @@ sce <- runNormalization(
 sce <- runSingleR(
     inSCE = sce,
     useAssay = "logcounts",
-    useBltinRef = opt$reference,
+    useBltinRef = reference,
     level = opt$level,
-    featureType = opt$featureType
+    featureType = featureType
 )
 
-# Build varname
-varName <- paste(
-    "SingleR", opt$reference, paste(opt$level, "labels", sep="."),
-    sep="_"
-)
+# Build varname which will be used to select the annotations
+varName <- sprintf('SingleR_%s_%s_labels', reference, opt$level)
 
 df.final <- data.frame(
     cell_barcodes = as.vector(colnames(sce)),
@@ -86,11 +103,14 @@ df.final <- data.frame(
 )
 
 # Write results to file
-output_filename <- paste(opt$output_file_prefix, 'cell_types', opt$level, 'tsv', sep='.')
+output_filename <- paste(opt$output_file_prefix, 
+  'cell_types',
+  reference,
+  opt$level, 'tsv', sep='.')
 write.table(
     df.final,
     output_filename,
     sep='\t', 
     quote=F, 
-    row.names = TRUE
+    row.names = FALSE,
 )
