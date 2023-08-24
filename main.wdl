@@ -55,7 +55,7 @@ task runSingler {
     >>>
 
     output {
-        File cell_assignments = "cell_assignments.${annotation_level}.tsv"
+        File cell_assignments = "${output_prefix}.cell_types.${reference}.${annotation_level}.tsv"
     }
 
     runtime {

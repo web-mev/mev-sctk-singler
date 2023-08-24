@@ -106,8 +106,8 @@ df.final <- data.frame(
 # Write results to file
 output_filename <- paste(opt$output_file_prefix, 
   'cell_types',
-  reference,
-  level, 'tsv', sep='.')
+  opt$reference,
+  opt$level, 'tsv', sep='.')
 write.table(
     df.final,
     output_filename,
