@@ -2,18 +2,18 @@
     "name": "SCTK single-cell typing with singleR", 
     "description": "singleR, made available through the single-cell toolkit (SCTK) allows annotation of cells based on canonical transcription markers. Further information is available at <a href=\"https://www.nature.com/articles/s41590-018-0276-y\">https://www.nature.com/articles/s41590-018-0276-y</a>", 
     "inputs": {
-        "SctkSingler.exprs_file": {
+        "exprs_file": {
             "description": "The input matrix- a raw (not normalized) gene expression matrix for your single-cell RNA-seq experiment.", 
             "name": "Input matrix:", 
             "required": true, 
-            "converter": "api.converters.data_resource.CromwellSingleVariableDataResourceConverter",
+            "converter": "api.converters.data_resource.RemoteNextflowSingleVariableDataResourceConverter",
             "spec": {
                 "attribute_type": "VariableDataResource", 
                 "resource_types": ["I_MTX", "RNASEQ_COUNT_MTX"], 
                 "many": false
             }
         }, 
-        "SctkSingler.annotation_level": {
+        "annotation_level": {
             "description":"The level of annotation for the cell typing. Choose \"main\" for broad annotation of major cell types. Fine-grained typing defines more subtypes, but is naturally slower and more prone to misidentification.",
             "name":"Annotation level:",
             "required": true,
@@ -23,7 +23,7 @@
                 "options": ["Main", "Fine"]
             }
         },
-        "SctkSingler.reference": {
+        "reference": {
             "description":"The reference annotation to which we will compare your cells. For more information see <a href=\"https://bioconductor.org/packages/3.17/data/experiment/vignettes/celldex/inst/doc/userguide.html\">https://bioconductor.org/packages/3.17/data/experiment/vignettes/celldex/inst/doc/userguide.html</a>",
             "name":"Reference database:",
             "required": true,
@@ -33,7 +33,7 @@
                 "options": ["Human Primary Cell Atlas", "ENCODE Blueprint", "Muraro Pancreas", "Database of Immune Cell Expression", "Immunological Genome Project", "Mouse", "Zeisel Mouse Brain"]
             }
         },
-        "SctkSingler.identifier_choice": {
+        "identifier_choice": {
             "description":"Which gene identifiers are used in your expression matrix? Symbols correspond with common gene names while Ensembl identifiers start with ENSG.",
             "name":"Gene identifier:",
             "required": true,
@@ -47,7 +47,7 @@
     "outputs": {
         "SctkSingler.cell_assignments": {
             "required": true,
-            "converter": "api.converters.data_resource.CromwellSingleDataResourceConverter",
+            "converter": "api.converters.data_resource.RemoteNextflowSingleDataResourceConverter",
             "spec": {
                 "attribute_type": "DataResource", 
                 "resource_type": "ANN",
@@ -55,6 +55,6 @@
             }
         }
     }, 
-    "mode": "cromwell",
+    "mode": "nf_batch",
     "workspace_operation": true
 }
